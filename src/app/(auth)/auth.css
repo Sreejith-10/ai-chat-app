@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:focus ~ .label-text,
+input:valid ~ .label-text {
+	@apply top-0 bg-slate-100 text-[12px] dark:bg-slate-900;
+}
