@@ -1,7 +1,7 @@
 "use client"
 
 import {configureStore} from "@reduxjs/toolkit";
-import windowReducer from "./window"
+import windowReducer from "./slices/windowSlice"
 
 export const store = configureStore({
 	reducer: {
