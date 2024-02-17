@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import {useState} from "react";
 import TypeWriter from "typewriter-effect";
 
 export default function Home() {
+	const [isLogges, setIsLogges] = useState(true);
 	const lists = [
 		"Write an essay about global warming",
 		"Suggest an activity for tomorrow",
@@ -31,16 +33,26 @@ export default function Home() {
 			<section className="w-1/2 lg:w-full h-full flex items-center justify-center flex-col bg-slate-900">
 				<div className="w-60 flex flex-col items-center justify-center gap-5">
 					<h3 className="text-slate-100 text-lg">Get Started</h3>
-					<Link
-						href={"/login"}
-						className="w-full text-center bg-purple-800 hover:bg-slate-800 ease-linear delay-200 text-slate-200 py-2 px-2 rounded-md">
-						Login
-					</Link>
-					<Link
-						href={"/register"}
-						className="w-full text-center bg-purple-800 hover:bg-slate-800 ease-linear delay-200 text-slate-200 py-2 px-2 rounded-md">
-						Signup
-					</Link>
+					{isLogges ? (
+						<Link
+							href={"/home"}
+							className="w-full text-center bg-purple-800 hover:bg-slate-800 ease-linear delay-200 text-slate-200 py-2 px-2 rounded-md">
+							Home
+						</Link>
+					) : (
+						<>
+							<Link
+								href={"/login"}
+								className="w-full text-center bg-purple-800 hover:bg-slate-800 ease-linear delay-200 text-slate-200 py-2 px-2 rounded-md">
+								Login
+							</Link>
+							<Link
+								href={"/register"}
+								className="w-full text-center bg-purple-800 hover:bg-slate-800 ease-linear delay-200 text-slate-200 py-2 px-2 rounded-md">
+								Signup
+							</Link>
+						</>
+					)}
 				</div>
 			</section>
 		</main>

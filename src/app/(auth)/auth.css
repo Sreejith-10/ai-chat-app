@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-input:focus ~ .label-text,
-input:valid ~ .label-text {
-	@apply top-0 bg-slate-100 text-[12px] dark:bg-slate-900;
+.input-area:focus ~ .label-text,
+.input-area:valid ~ .label-text {
+	@apply top-0 bg-slate-100 text-[12px] px-2 dark:bg-slate-900 font-semibold;
 }
