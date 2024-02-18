@@ -13,7 +13,7 @@ export default function Home() {
 	];
 
 	return (
-		<main className="w-screen h-screen flex flex-row gap-5 items-center justify-center">
+		<main className="w-screen h-screen flex flex-row items-center justify-center">
 			<section className="w-1/2 h-full dark:bg-purple-800 md:hidden lg:hidden flex items-center justify-center flex-col gap-5">
 				<h1 className="font-bold text-[2rem] dark:text-slate-100">
 					Welcome to Ai world

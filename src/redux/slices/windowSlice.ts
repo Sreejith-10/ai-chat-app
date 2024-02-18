@@ -3,11 +3,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type INTIAL_STATE_Type = {
-    showSideBar:boolean
+    showSideBar:boolean,
+    sideBarSlider:number
 }
 
 const INTIAL_STATE:INTIAL_STATE_Type = {
-    showSideBar : false
+    showSideBar : false,
+    sideBarSlider:0
 }
 
 const windowSlice = createSlice({
@@ -16,10 +18,13 @@ const windowSlice = createSlice({
     reducers:{
         setSideBar : (state,action:PayloadAction<boolean>) =>{
             state.showSideBar = action.payload
+        },
+        setSideBarWidth: (state,action:PayloadAction<number>)=>{
+            state.sideBarSlider = action.payload
         }
     }
 })
 
-export const {setSideBar} = windowSlice.actions
+export const {setSideBar,setSideBarWidth} = windowSlice.actions
 
 export default windowSlice.reducer

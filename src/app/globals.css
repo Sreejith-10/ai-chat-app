@@ -84,3 +84,9 @@
 		overflow-x: hidden;
 	}
 }
+
+body {
+	::-webkit-scrollbar {
+		display: none;
+	}
+}
