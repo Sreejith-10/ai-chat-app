@@ -32,7 +32,7 @@ const HomeLayout = ({
 						marginLeft: `-${marginL}px`,
 					},
 					show: {
-						marginLeft: "0%",
+						marginLeft: "0",
 					},
 				}}
 				initial="show"

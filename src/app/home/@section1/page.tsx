@@ -3,7 +3,7 @@
 import {useAppDispatch, useAppSelector} from "@/redux/redux.hooks";
 import {setSideBar, setSideBarWidth} from "@/redux/slices/windowSlice";
 import {Bot, ChevronLeft, ChevronRight, FilePenLineIcon} from "lucide-react";
-import React, {useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 
 const SideSection = () => {
 	const ref = useRef<HTMLDivElement | null>(null!);
@@ -19,8 +19,8 @@ const SideSection = () => {
 	return (
 		<>
 			<div className="w-full h-full flex">
-				<div className="w-[95%] h-full p-5 bg-slate-100 ">
-					<div className="w-full h-20 flex items-center justify-between hover:bg-slate-300 px-3 rounded-md ease-in-out delay-200 duration-100">
+				<div className="w-[95%] h-full p-5 bg-slate-100 dark:bg-slate-900">
+					<div className="w-full h-20 flex items-center justify-between hover:bg-slate-300 dark:hover:bg-slate-600 px-3 rounded-md ease-in-out delay-200 duration-100">
 						<span className=" flex items-center justify-start gap-5">
 							<Bot size={30} />
 							<h3 className="font-semibold text-lg">New chat</h3>
@@ -31,7 +31,7 @@ const SideSection = () => {
 						<div className="w-full h-auto mt-3">
 							<h3 className="font-semibold text-lg pb-2">Recent</h3>
 							<ul className="w-full flex gap-3 flex-col">
-								<li className="text-nowrap font-semibold text-base line-clamp-1 px-2 py-2 hover:bg-slate-300 rounded-md ease-in-out delay-200 duration-300">
+								<li className="text-nowrap font-semibold text-base line-clamp-1 px-2 py-2 hover:bg-slate-300 dark:hover:bg-slate-600  rounded-md ease-in-out delay-200 duration-300">
 									Gloabl warming
 								</li>
 								<li className="font-semibold text-base line-clamp-1 px-2 py-2 hover:bg-slate-300 rounded-md ease-in-out delay-200 duration-300">

@@ -24,6 +24,7 @@ import {useState} from "react";
 
 const RegisterPage = () => {
 	const [showPass, setShowPass] = useState(false);
+	const [showConfirmPass, setShowConfirmPass] = useState(false);
 	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
@@ -135,6 +136,37 @@ const RegisterPage = () => {
 										</FormControl>
 										<FormLabel className="absolute font-bold text-sm pointer-events-none ease-in-out delay-100 duration-200 top-1/2 left-3 -translate-y-1/2 label-text">
 											Password
+										</FormLabel>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="confirmPassword"
+								render={({field}) => (
+									<FormItem className="w-auto h-auto relative space-y-0">
+										{showConfirmPass ? (
+											<EyeIcon
+												className="absolute cursor-pointer z-10 right-3 top-1/2 -translate-y-1/2"
+												onClick={() => setShowConfirmPass(false)}
+											/>
+										) : (
+											<EyeOffIcon
+												className="absolute cursor-pointer z-10 right-3 top-1/2 -translate-y-1/2"
+												onClick={() => setShowConfirmPass(true)}
+											/>
+										)}
+										<FormControl>
+											<Input
+												type={showConfirmPass ? "text" : "password"}
+												{...field}
+												className="input-area bg-transparent"
+												required
+											/>
+										</FormControl>
+										<FormLabel className="absolute font-bold text-sm pointer-events-none ease-in-out delay-100 duration-200 top-1/2 left-3 -translate-y-1/2 label-text">
+											Confirm password
 										</FormLabel>
 										<FormMessage />
 									</FormItem>
