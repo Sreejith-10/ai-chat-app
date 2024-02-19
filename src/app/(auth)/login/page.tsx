@@ -20,9 +20,16 @@ import {loginSchema} from "@/schemas/loginSchema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {EyeIcon, EyeOffIcon} from "lucide-react";
 import {useState} from "react";
+import axios from "axios";
+import FormError from "@/components/formerr";
+import FormSuccess from "@/components/formsuccess";
+import {useRouter} from "next/navigation";
 
 const LoginPage = () => {
+	const router = useRouter();
 	const [showPass, setShowPass] = useState(false);
+	const [success, setSucces] = useState("");
+	const [err, setErr] = useState("");
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
@@ -31,6 +38,21 @@ const LoginPage = () => {
 			password: "",
 		},
 	});
+
+	const submitHandler = (values: z.infer<typeof loginSchema>) => {
+		try {
+			axios
+				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/login`, values, {
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+				.then(({data}) => setSucces(data.message));
+			router.push("/login");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<section className="w-[900px] h-[500px] sm:w-[350px] md:w-[500px] flex bg-slate-100 dark:bg-slate-900 rounded-md shadow-xl animate-fade-op">
@@ -61,7 +83,9 @@ const LoginPage = () => {
 						</div>
 					</div>
 					<Form {...form}>
-						<form className="w-full h-auto flex flex-col gap-5">
+						<form
+							onSubmit={form.handleSubmit(submitHandler)}
+							className="w-full h-auto flex flex-col gap-5">
 							<FormField
 								control={form.control}
 								name="email"
@@ -110,7 +134,11 @@ const LoginPage = () => {
 									</FormItem>
 								)}
 							/>
-							<Button className="w-full bg-purple-700 dark:text-slate-100 hover:bg-purple-500">
+							<FormError message={err} />
+							<FormSuccess message={success} />
+							<Button
+								type="submit"
+								className="w-full bg-purple-700 dark:text-slate-100 hover:bg-purple-500">
 								Login
 							</Button>
 						</form>

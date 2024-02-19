@@ -21,10 +21,17 @@ import FormError from "@/components/formerr";
 import FormSuccess from "@/components/formsuccess";
 import {EyeIcon, EyeOffIcon} from "lucide-react";
 import {useState} from "react";
+import axios from "axios";
+import {useRouter} from "next/navigation";
 
 const RegisterPage = () => {
+	const router = useRouter();
+
 	const [showPass, setShowPass] = useState(false);
 	const [showConfirmPass, setShowConfirmPass] = useState(false);
+	const [success, setSucces] = useState("");
+	const [err, setErr] = useState("");
+
 	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
@@ -35,7 +42,18 @@ const RegisterPage = () => {
 	});
 
 	const onSubmit = (values: z.infer<typeof registerSchema>) => {
-		console.log(values);
+		try {
+			axios
+				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/signup`, values, {
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+				.then(({data}) => setSucces(data.message));
+			router.push("/login");
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -172,8 +190,8 @@ const RegisterPage = () => {
 									</FormItem>
 								)}
 							/>
-							<FormError message="" />
-							<FormSuccess message="" />
+							<FormError message={err} />
+							<FormSuccess message={success} />
 							<Button
 								type="submit"
 								className="w-full bg-purple-700 dark:text-slate-100 hover:bg-purple-500">

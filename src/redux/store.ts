@@ -1,11 +1,13 @@
-"use client"
+"use client";
 
 import {configureStore} from "@reduxjs/toolkit";
-import windowReducer from "./slices/windowSlice"
+import windowReducer from "./slices/windowSlice";
+import authReducer from "./slices/authSlice";
 
 export const store = configureStore({
 	reducer: {
-        window : windowReducer
+		window: windowReducer,
+		auth: authReducer,
 	},
 });
 
