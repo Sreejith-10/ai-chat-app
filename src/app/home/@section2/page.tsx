@@ -1,11 +1,23 @@
+"use client";
+
 import {Input} from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
 import {ArrowUp} from "lucide-react";
-import React from "react";
+import React, {useState} from "react";
 
 const MainSection = () => {
+	const [prompt, setPropmpt] = useState("");
+
+	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPropmpt(e.target.value);
+	};
+
+	const keyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") console.log("Enter");
+	};
+
 	return (
-		<div className="w-full h-full p-5 flex flex-col items-center">
+		<div className="w-full h-full p-5 flex flex-col items-center bg-slate-50 dark:bg-slate-950">
 			<header className="w-full h-10 ">
 				<NavBar />
 			</header>
@@ -19,7 +31,11 @@ const MainSection = () => {
 					</h4>
 				</div>
 				<div className="w-full absolute bottom-0">
-					<Input placeholder="Enter a prompt here" />
+					<Input
+						onchange={onChangeHandler}
+						onkeydown={keyDownHandler}
+						placeholder="Enter a prompt here"
+					/>
 					<ArrowUp className="absolute top-2 right-3 bg-slate-300 rounded-md" />
 				</div>
 			</section>
