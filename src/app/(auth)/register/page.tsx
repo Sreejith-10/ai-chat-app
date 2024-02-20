@@ -49,7 +49,8 @@ const RegisterPage = () => {
 						"Content-Type": "application/json",
 					},
 				})
-				.then(({data}) => setSucces(data.message));
+				.then(({data}) => setSucces(data.message))
+				.catch(({response: {data}}) => setErr(data.message));
 			router.push("/login");
 		} catch (error) {
 			console.log(error);

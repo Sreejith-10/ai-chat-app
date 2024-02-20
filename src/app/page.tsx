@@ -2,7 +2,6 @@
 
 import {useAppSelector} from "@/redux/redux.hooks";
 import Link from "next/link";
-import {useState} from "react";
 import TypeWriter from "typewriter-effect";
 
 export default function Home() {

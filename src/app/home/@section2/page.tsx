@@ -8,6 +8,20 @@ import React, {useState} from "react";
 const MainSection = () => {
 	const [prompt, setPropmpt] = useState("");
 
+	const [chats, setChats] = useState([
+		{
+			user: "human",
+			time: "",
+			message: "How to calculate time",
+		},
+		{
+			user: "gemeni",
+			time: "",
+			message:
+				"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, accusantium?",
+		},
+	]);
+
 	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPropmpt(e.target.value);
 	};
@@ -22,13 +36,35 @@ const MainSection = () => {
 				<NavBar />
 			</header>
 			<section className="w-1/2 h-full relative flex items-start mt-10">
-				<div>
-					<h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-						Hello, Maestro.
-					</h1>
-					<h4 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-600">
-						How can i help you today?
-					</h4>
+				<div className="w-full h-full overflow-y-scroll">
+					{chats ? (
+						<ul className="w-full space-y-5 mt-4">
+							{chats.map((item) => (
+								<li>
+									<div className="w-full h-auto flex flex-col gap-5">
+										<span className="flex gap-5 items-center">
+											<i className="bg-purple-600 w-10 h-10 rounded-full text-center">
+												i
+											</i>
+											<p>{item.user}</p>
+										</span>
+										<span>
+											<p>{item.message}</p>
+										</span>
+									</div>
+								</li>
+							))}
+						</ul>
+					) : (
+						<>
+							<h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+								Hello, Maestro.
+							</h1>
+							<h4 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-600">
+								How can i help you today?
+							</h4>
+						</>
+					)}
 				</div>
 				<div className="w-full absolute bottom-0">
 					<Input

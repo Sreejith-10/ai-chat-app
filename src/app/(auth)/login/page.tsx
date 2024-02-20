@@ -24,6 +24,7 @@ import axios from "axios";
 import FormError from "@/components/formerr";
 import FormSuccess from "@/components/formsuccess";
 import {useRouter} from "next/navigation";
+import {setSession} from "@/lib/token";
 
 const LoginPage = () => {
 	const router = useRouter();
@@ -40,6 +41,8 @@ const LoginPage = () => {
 	});
 
 	const submitHandler = (values: z.infer<typeof loginSchema>) => {
+		setErr("");
+		setSucces("");
 		try {
 			axios
 				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/login`, values, {
@@ -47,7 +50,11 @@ const LoginPage = () => {
 						"Content-Type": "application/json",
 					},
 				})
-				.then(({data}) => setSucces(data.message));
+				.then(({data}) => {
+					setSession(data.token);
+					setSucces(data.message);
+				})
+				.catch(({response: {data}}) => setErr(data.message));
 			router.push("/login");
 		} catch (error) {
 			console.log(error);
@@ -142,11 +149,16 @@ const LoginPage = () => {
 								Login
 							</Button>
 						</form>
-						<span>
+						<span className="w-full flex items-center justify-between">
 							<Link
 								className="hover:text-purple-700 ease-linear delay-200"
 								href={"/register"}>
-								Create a new account ?{" "}
+								Create a new account{" "}
+							</Link>
+							<Link
+								className="hover:text-purple-700 ease-linear delay-200"
+								href={"/email"}>
+								Forgot password ?
 							</Link>
 						</span>
 					</Form>
