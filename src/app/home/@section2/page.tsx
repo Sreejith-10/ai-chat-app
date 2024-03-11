@@ -2,32 +2,34 @@
 
 import {Input} from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
+import axios from "axios";
 import {ArrowUp} from "lucide-react";
 import React, {useState} from "react";
+import TypeWriter from "typewriter-effect";
 
 const MainSection = () => {
 	const [prompt, setPropmpt] = useState("");
 
-	const [chats, setChats] = useState([
-		{
-			user: "human",
-			time: "",
-			message: "How to calculate time",
-		},
-		{
-			user: "gemeni",
-			time: "",
-			message:
-				"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, accusantium?",
-		},
-	]);
+	const [chats, setChats] = useState<{user: string; message: string}[]>([]);
 
 	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPropmpt(e.target.value);
 	};
 
-	const keyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") console.log("Enter");
+	const keyDownHandler = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			setChats((prev) => [...prev, {user: "You", message: prompt}]);
+			const {data} = await axios.post(
+				"http://localhost:5001/api/gemeni_chat",
+				{body: prompt},
+				{headers: {"Content-Type": "application/json"}}
+			);
+			setPropmpt("");
+			console.log(data);
+			if (data) {
+				setChats((prev) => [...prev, {user: "Gemeni", message: data.message}]);
+			}
+		}
 	};
 
 	return (
@@ -37,10 +39,10 @@ const MainSection = () => {
 			</header>
 			<section className="w-1/2 h-full relative flex items-start mt-10">
 				<div className="w-full h-full overflow-y-scroll">
-					{chats ? (
+					{chats.length != 0 ? (
 						<ul className="w-full space-y-5 mt-4">
-							{chats.map((item) => (
-								<li>
+							{chats?.map((item) => (
+								<li key={item.user}>
 									<div className="w-full h-auto flex flex-col gap-5">
 										<span className="flex gap-5 items-center">
 											<i className="bg-purple-600 w-10 h-10 rounded-full text-center">
@@ -49,7 +51,16 @@ const MainSection = () => {
 											<p>{item.user}</p>
 										</span>
 										<span>
-											<p>{item.message}</p>
+											{item.user === "Gemeni"
+												? ` ${(
+														<TypeWriter
+															options={{
+																autoStart: true,
+																strings: item.message,
+															}}
+														/>
+												  )}`
+												: item.message}
 										</span>
 									</div>
 								</li>
@@ -70,6 +81,7 @@ const MainSection = () => {
 					<Input
 						onchange={onChangeHandler}
 						onkeydown={keyDownHandler}
+						value={prompt}
 						placeholder="Enter a prompt here"
 					/>
 					<ArrowUp className="absolute top-2 right-3 bg-slate-300 rounded-md" />

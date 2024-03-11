@@ -45,7 +45,7 @@ const LoginPage = () => {
 		setSucces("");
 		try {
 			axios
-				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/login`, values, {
+				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/login`, values, {
 					headers: {
 						"Content-Type": "application/json",
 					},

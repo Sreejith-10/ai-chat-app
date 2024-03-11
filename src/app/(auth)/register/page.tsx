@@ -44,7 +44,7 @@ const RegisterPage = () => {
 	const onSubmit = (values: z.infer<typeof registerSchema>) => {
 		try {
 			axios
-				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/signup`, values, {
+				.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/signup`, values, {
 					headers: {
 						"Content-Type": "application/json",
 					},
