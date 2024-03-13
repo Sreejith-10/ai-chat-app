@@ -20,11 +20,11 @@ import {loginSchema} from "@/schemas/loginSchema";
 import {EyeIcon, EyeOffIcon} from "lucide-react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
-import axios from "axios";
 import FormError from "@/components/formerr";
 import FormSuccess from "@/components/formsuccess";
 import {useRouter} from "next/navigation";
 import {setSession} from "@/lib/token";
+import axios from "axios";
 
 const LoginPage = () => {
 	const router = useRouter();
@@ -51,6 +51,7 @@ const LoginPage = () => {
 					},
 				})
 				.then(({data}) => {
+					console.log(data);
 					setSession(data.token);
 					setSucces(data.message);
 				})

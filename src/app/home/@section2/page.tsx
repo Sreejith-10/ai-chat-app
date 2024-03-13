@@ -2,8 +2,9 @@
 
 import {Input} from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
+import MarkdownRenderer from "@/components/ui/rendermarkdown";
 import axios from "axios";
-import {ArrowUp} from "lucide-react";
+import {ArrowUp, User} from "lucide-react";
 import React, {useState} from "react";
 import TypeWriter from "typewriter-effect";
 
@@ -45,22 +46,15 @@ const MainSection = () => {
 								<li key={item.user}>
 									<div className="w-full h-auto flex flex-col gap-5">
 										<span className="flex gap-5 items-center">
-											<i className="bg-purple-600 w-10 h-10 rounded-full text-center">
-												i
-											</i>
+											{item.user === "Gemini" ? "d" : "l"}
 											<p>{item.user}</p>
 										</span>
 										<span>
-											{item.user === "Gemeni"
-												? ` ${(
-														<TypeWriter
-															options={{
-																autoStart: true,
-																strings: item.message,
-															}}
-														/>
-												  )}`
-												: item.message}
+											{item.user === "Gemeni" ? (
+												<MarkdownRenderer markdown={item.message} />
+											) : (
+												item.message
+											)}
 										</span>
 									</div>
 								</li>
