@@ -2,7 +2,7 @@
 
 import {useAppDispatch, useAppSelector} from "@/redux/redux.hooks";
 import {setSideBar, setSideBarWidth} from "@/redux/slices/windowSlice";
-import {Bot, ChevronLeft, ChevronRight, FilePenLineIcon} from "lucide-react";
+import {Bot, ChevronLeft, ChevronRight, FilePenLineIcon, X} from "lucide-react";
 import {useEffect, useRef} from "react";
 
 const SideSection = () => {
@@ -50,13 +50,22 @@ const SideSection = () => {
 						</div>
 					</div>
 				</div>
+				<div className="w-fit h-full">
+					<X />
+				</div>
 				<div
 					ref={ref}
-					className="w-[5%] h-full bg-[rgba(0,0,0,0.1)] flex items-center justify-center">
+					className="w-[5%] h-full bg-[rgba(0,0,0,0.1)] flex items-center justify-center sm:hidden">
 					{showSideBar ? (
-						<ChevronRight onClick={() => dispatch(setSideBar(false))} />
+						<ChevronRight
+							onClick={() => dispatch(setSideBar(false))}
+							className="cursor-pointer"
+						/>
 					) : (
-						<ChevronLeft onClick={() => dispatch(setSideBar(true))} />
+						<ChevronLeft
+							onClick={() => dispatch(setSideBar(true))}
+							className="cursor-pointer"
+						/>
 					)}
 				</div>
 			</div>

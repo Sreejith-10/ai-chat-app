@@ -2,11 +2,9 @@
 
 import {Input} from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
-import MarkdownRenderer from "@/components/ui/rendermarkdown";
 import axios from "axios";
 import {ArrowUp, User} from "lucide-react";
 import React, {useState} from "react";
-import TypeWriter from "typewriter-effect";
 
 const MainSection = () => {
 	const [prompt, setPropmpt] = useState("");
@@ -50,11 +48,10 @@ const MainSection = () => {
 											<p>{item.user}</p>
 										</span>
 										<span>
-											{item.user === "Gemeni" ? (
-												<MarkdownRenderer markdown={item.message} />
-											) : (
-												item.message
-											)}
+											{item.user === "Gemeni"
+												? item.message
+												: // <MarkdownRenderer markdown={item.message} />
+												  item.message}
 										</span>
 									</div>
 								</li>

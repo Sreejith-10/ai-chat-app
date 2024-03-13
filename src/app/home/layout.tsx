@@ -24,7 +24,7 @@ const HomeLayout = ({
 	const marginL = parentWidth - sideBarSlider;
 
 	return (
-		<main className="w-screen h-screen flex">
+		<main className="w-screen h-screen flex sm:relative">
 			<motion.section
 				ref={parentRef}
 				variants={{
@@ -37,11 +37,16 @@ const HomeLayout = ({
 				}}
 				initial="show"
 				animate={!showSideBar ? "show" : "hide"}
-				className="w-[25%] h-full">
+				className="w-[25%] h-full sm:hidden">
+				{section1}
+			</motion.section>
+			<motion.section className="h-full w-[80%] hidden sm:block absolute top-0 left-0 z-50">
 				{section1}
 			</motion.section>
 			<section
-				className={`${showSideBar ? "w-screen" : "ml-0 w-[75%] h-full"} `}>
+				className={`${
+					showSideBar ? "w-screen" : "ml-0 w-[75%] h-full"
+				} sm:w-full`}>
 				{section2}
 			</section>
 		</main>
