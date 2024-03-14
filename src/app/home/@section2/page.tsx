@@ -36,7 +36,7 @@ const MainSection = () => {
 			<header className="w-full h-10 ">
 				<NavBar />
 			</header>
-			<section className="w-1/2 h-full relative flex items-start mt-10">
+			<section className="w-1/2 sm:w-full h-full relative flex items-start mt-10">
 				<div className="w-full h-full overflow-y-scroll">
 					{chats.length != 0 ? (
 						<ul className="w-full space-y-5 mt-4">
@@ -59,10 +59,10 @@ const MainSection = () => {
 						</ul>
 					) : (
 						<>
-							<h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+							<h1 className="text-8xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
 								Hello, Maestro.
 							</h1>
-							<h4 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-600">
+							<h4 className="text-6xl sm:text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-600">
 								How can i help you today?
 							</h4>
 						</>

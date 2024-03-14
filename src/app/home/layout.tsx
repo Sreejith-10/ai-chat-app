@@ -12,7 +12,9 @@ const HomeLayout = ({
 	section2: ReactNode;
 }) => {
 	const parentRef = useRef<HTMLElement | null>(null);
-	const {showSideBar, sideBarSlider} = useAppSelector((state) => state.window);
+	const {showSideBar, sideBarSlider, navIcons} = useAppSelector(
+		(state) => state.window
+	);
 	const [parentWidth, setParentWidth] = useState<number>(0);
 
 	useEffect(() => {
@@ -40,13 +42,26 @@ const HomeLayout = ({
 				className="w-[25%] h-full sm:hidden">
 				{section1}
 			</motion.section>
-			<motion.section className="h-full w-[80%] hidden sm:block absolute top-0 left-0 z-50">
+			<motion.section
+				variants={{
+					intital: {
+						translateX: -1000,
+						zIndex: -100,
+					},
+					animate: {
+						translateX: 0,
+						zIndex: 100,
+					},
+				}}
+				initial="initial"
+				animate={navIcons ? "animate" : "intital"}
+				className="h-full w-[80%] hidden sm:block absolute top-0 left-0">
 				{section1}
 			</motion.section>
 			<section
 				className={`${
 					showSideBar ? "w-screen" : "ml-0 w-[75%] h-full"
-				} sm:w-full`}>
+				} sm:w-screen sm:z-[1]`}>
 				{section2}
 			</section>
 		</main>

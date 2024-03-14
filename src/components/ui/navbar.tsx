@@ -16,14 +16,24 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "./select";
-import {Moon, Sun} from "lucide-react";
+import {Menu, Moon, Sun} from "lucide-react";
+import {useAppDispatch} from "@/redux/redux.hooks";
+import {setNavIcons} from "@/redux/slices/windowSlice";
 
 const NavBar = () => {
 	const {theme, setTheme} = useTheme();
+	const dispatch = useAppDispatch();
 
 	return (
 		<nav className="w-full h-auto flex items-center justify-between">
-			<span>
+			<div>
+				<Menu
+					className="cursor-pointer"
+					size={30}
+					onClick={() => dispatch(setNavIcons(true))}
+				/>
+			</div>
+			<span className="sm:hidden">
 				<Select>
 					<SelectTrigger className="w-[150px]">
 						<SelectValue placeholder="Gemini" />
@@ -35,7 +45,7 @@ const NavBar = () => {
 				</Select>
 			</span>
 			<span>
-				<h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+				<h3 className="text-3xl sm:text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
 					Genartive Ai
 				</h3>
 			</span>
