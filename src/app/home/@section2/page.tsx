@@ -1,60 +1,84 @@
 "use client";
 
+import Chats from "@/components/chats";
 import {Input} from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
 import NavBar from "@/components/ui/navbar";
+import {pauseSpeach, textToSpeach} from "@/lib/texttospeach";
 import axios from "axios";
-import {ArrowUp, User} from "lucide-react";
-import React, {useState} from "react";
+import {ArrowUp, PauseCircle, Sparkle, Volume2} from "lucide-react";
+import React, {useEffect, useRef, useState} from "react";
 
 const MainSection = () => {
 	const [prompt, setPropmpt] = useState("");
 
-	const [chats, setChats] = useState<{user: string; message: string}[]>([]);
+	const [incoming, setIncoming] = useState("");
+
+	const chatRef = useRef<HTMLUListElement>(null);
+
+	const [chats, setChats] = useState<
+		{id: number; user: string; message: string; replie: string}[]
+	>([]);
 
 	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPropmpt(e.target.value);
 	};
 
+	useEffect(() => {
+		const updateState = () => {
+			const s = chats.map((item) => {
+				if (item.replie === "") {
+					return {...item, replie: incoming};
+				} else {
+					return item;
+				}
+			});
+			setChats(s);
+			setIncoming("");
+		};
+
+		updateState();
+	}, [incoming]);
+
+	useEffect(() => {
+		chatRef.current?.scrollIntoView({behavior: "smooth"});
+	}, [chats]);
+
 	const keyDownHandler = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			setChats((prev) => [...prev, {user: "You", message: prompt}]);
-			const {data} = await axios.post(
-				"http://localhost:5001/api/gemeni_chat",
-				{body: prompt},
-				{headers: {"Content-Type": "application/json"}}
-			);
-			setPropmpt("");
-			console.log(data);
-			if (data) {
-				setChats((prev) => [...prev, {user: "Gemeni", message: data.message}]);
+		try {
+			if (e.key === "Enter") {
+				const id = chats.length + 1;
+				const cmd = prompt;
+				setPropmpt("");
+				setChats((prev) => [
+					...prev,
+					{id: id, user: "You", message: prompt, replie: ""},
+				]);
+				const {data} = await axios.post(
+					"http://localhost:5001/api/gemeni_chat",
+					{body: cmd},
+					{headers: {"Content-Type": "application/json"}}
+				);
+				setIncoming(data.message);
 			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
 	return (
 		<div className="w-full h-full p-5 flex flex-col items-center bg-slate-50 dark:bg-slate-950">
-			<header className="w-full h-10 ">
+			<nav className="w-full h-10 ">
 				<NavBar />
-			</header>
+			</nav>
 			<section className="w-1/2 sm:w-full h-full relative flex items-start mt-10">
-				<div className="w-full h-full overflow-y-scroll">
-					{chats.length != 0 ? (
-						<ul className="w-full space-y-5 mt-4">
+				<div className="w-full h-fit">
+					{chats.length !== 0 ? (
+						<ul
+							ref={chatRef}
+							className="w-full h-[700px] space-y-8 mt-4 overflow-scroll">
 							{chats?.map((item) => (
-								<li key={item.user}>
-									<div className="w-full h-auto flex flex-col gap-5">
-										<span className="flex gap-5 items-center">
-											{item.user === "Gemini" ? "d" : "l"}
-											<p>{item.user}</p>
-										</span>
-										<span>
-											{item.user === "Gemeni"
-												? item.message
-												: // <MarkdownRenderer markdown={item.message} />
-												  item.message}
-										</span>
-									</div>
-								</li>
+								<Chats item={item} key={item.id} />
 							))}
 						</ul>
 					) : (
@@ -68,16 +92,22 @@ const MainSection = () => {
 						</>
 					)}
 				</div>
-				<div className="w-full absolute bottom-0">
+			</section>
+			<div className="w-auto absolute bottom-2">
+				<div className="w-[700px]">
 					<Input
 						onchange={onChangeHandler}
 						onkeydown={keyDownHandler}
-						value={prompt}
 						placeholder="Enter a prompt here"
+						value={prompt}
 					/>
 					<ArrowUp className="absolute top-2 right-3 bg-slate-300 rounded-md" />
 				</div>
-			</section>
+				<p className="text-[12px] py-2 text-center">
+					This ai may display in accurate info,including about people , so
+					double check its response
+				</p>
+			</div>
 		</div>
 	);
 };

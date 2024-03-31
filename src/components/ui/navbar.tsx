@@ -26,7 +26,7 @@ const NavBar = () => {
 
 	return (
 		<nav className="w-full h-auto flex items-center justify-between">
-			<div>
+			<div className="hidden lg:block">
 				<Menu
 					className="cursor-pointer"
 					size={30}
@@ -56,7 +56,7 @@ const NavBar = () => {
 					<Sun onClick={() => setTheme("light")} />
 				)}
 				<DropdownMenu>
-					<DropdownMenuTrigger className="shadow-md py-2 px-4 rounded-full font-bold bg-emerald-500 text-white border border-slate-200">
+					<DropdownMenuTrigger className="shadow-md py-2 px-4 mr-4 rounded-full font-bold bg-emerald-500 text-white border border-slate-200">
 						S
 					</DropdownMenuTrigger>
 					<DropdownMenuContent>

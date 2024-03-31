@@ -23,7 +23,7 @@ const HomeLayout = ({
 		}
 	}, [parentRef.current?.offsetWidth]);
 
-	const marginL = parentWidth - sideBarSlider;
+	const marginL = parentWidth - sideBarSlider - 20;
 
 	return (
 		<main className="w-screen h-screen flex sm:relative">
